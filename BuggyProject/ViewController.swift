@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AFNetworking
 
 class ViewController: UIViewController {
 
@@ -25,6 +26,14 @@ class ViewController: UIViewController {
     // MARK: Actions
     // TODO: Rename this
     @IBAction func bTap() {
+        let request = imgurURLRequest()
+        imageView?.setImageWith(request, placeholderImage: nil, success: { [weak self] (request, response, image) in
+            print("success")
+            guard let strongSelf = self else { return } // strong reference to weak self
+            strongSelf.imageView?.image = image
+        }, failure: { (request, response, error) in
+            print("error: \(error)")
+        })
     }
 
     @IBAction func searchesTapped() {
