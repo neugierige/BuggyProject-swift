@@ -26,6 +26,8 @@ class ViewController: UIViewController {
     // MARK: Actions
     // TODO: Rename this
     @IBAction func goButtonTapped() {
+        guard let text = textField?.text else { return }
+        searches.append(text)
         let request = imgurURLRequest()
         imageView?.setImageWith(request, placeholderImage: nil, success: { [weak self] (request, response, image) in
             print("success")
@@ -37,6 +39,9 @@ class ViewController: UIViewController {
     }
 
     @IBAction func searchesTapped() {
+        let searchVC = SearchesViewController()
+        searchVC.searches = searches
+        present(searchVC, animated: true, completion: nil)
     }
 
     // MARK: Helpers
