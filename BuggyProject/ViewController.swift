@@ -25,7 +25,7 @@ class ViewController: UIViewController {
 
     // MARK: Actions
     // TODO: Rename this
-    @IBAction func bTap() {
+    @IBAction func goButtonTapped() {
         let request = imgurURLRequest()
         imageView?.setImageWith(request, placeholderImage: nil, success: { [weak self] (request, response, image) in
             print("success")
