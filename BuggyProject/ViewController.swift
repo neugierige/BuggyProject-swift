@@ -25,9 +25,23 @@ class ViewController: UIViewController {
 
     // MARK: Actions
     @IBAction func bTap() {
+        if let search = textField?.text {
+            searches.append(search)
+        }
+        
+        guard let request = imgurURLRequest() else { return }
+        
+        imageView?.setImageWith(request, placeholderImage: nil, success: { [weak self] (request, response, image) in
+            self?.imageView?.image = image
+        }, failure: { (request, response, error) in
+            // TODO: Handle the error
+        })
     }
 
     @IBAction func searchesTapped() {
+        let searchesVC = SearchesViewController()
+        searchesVC.searches = searches
+        present(searchesVC, animated: true, completion: nil)
     }
 
     // MARK: Helpers
@@ -49,7 +63,7 @@ class ViewController: UIViewController {
     func isValidString(_ stringToCheck: String?) -> Bool {
         guard let realString = stringToCheck else { return false }
         let stringLength = realString.count
-        return stringLength > 4 && stringLength < 7
+        return stringLength > 4 && stringLength <= 7
     }
 
     func textFieldDidChange(_ notification: Notification) {
