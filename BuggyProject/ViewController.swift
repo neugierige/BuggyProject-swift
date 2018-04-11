@@ -24,11 +24,11 @@ class ViewController: UIViewController {
     }
 
     // MARK: Actions
-    // TODO: Rename this
     @IBAction func bTap() {
-        guard let text = textField?.text else { return }
+        guard let text = textField?.text, let request = imgurURLRequest() else {
+            return
+        }
         searches.append(text)
-        let request = imgurURLRequest()
         imageView?.setImageWith(request, placeholderImage: nil, success: { [weak self] (request, response, image) in
             print("success")
             guard let strongSelf = self else { return } // strong reference to weak self
@@ -46,10 +46,18 @@ class ViewController: UIViewController {
 
     // MARK: Helpers
 
-    func imgurURLRequest() -> URLRequest {
-        // sample: WPOBwNC
-        let urlString = String(format: "http://i.imgur.com/%@.png", (textField?.text)!)
-        return URLRequest(url: URL(string: urlString)!)
+    func imgurURLRequest() -> URLRequest? {
+        // sample: WPOBwNC, u3qrQrH
+        let urlBaseString = "http://i.imgur.com/"
+        let fileExtension = ".png"
+
+        if let id = textField?.text {
+            let urlString = urlBaseString + id + fileExtension
+            if let url = URL(string: urlString) {
+                return URLRequest(url: url)
+            }
+        }
+        return nil
     }
 
     func isValidString(_ stringToCheck: String?) -> Bool {
