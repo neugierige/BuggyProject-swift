@@ -17,6 +17,8 @@ class SearchesViewController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: SearchesViewController.cellIdentifier)
+        tableView.dataSource = self
+        tableView.reloadData()
     }
 
     // MARK: UITableViewDataSource
