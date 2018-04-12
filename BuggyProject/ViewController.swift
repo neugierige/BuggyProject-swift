@@ -18,16 +18,27 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         validImageView?.backgroundColor = UIColor.red
         NotificationCenter.default.addObserver(self, selector: #selector(ViewController.textFieldDidChange(_:)), name: NSNotification.Name.UITextFieldTextDidChange , object: self.textField);
     }
 
     // MARK: Actions
     @IBAction func bTap() {
+        guard let text = self.textField?.text, !text.isEmpty else { return }
+        searches.append(text)
+        guard let request = imgurURLRequest() else { return }
+        
+        imageView?.setImageWith(request, placeholderImage: nil, success: { [weak self] (request, response, image) in self?.imageView?.image = image
+            }, failure: { (request, response, error) in
+                
+                //TOOD: ERROR
+        })
     }
 
     @IBAction func searchesTapped() {
+        let searchVC = SearchesViewController()
+        searchVC.searches = searches
+        present(searchVC, animated: true, completion: nil)
     }
 
     // MARK: Helpers
@@ -49,7 +60,7 @@ class ViewController: UIViewController {
     func isValidString(_ stringToCheck: String?) -> Bool {
         guard let realString = stringToCheck else { return false }
         let stringLength = realString.count
-        return stringLength > 4 && stringLength < 7
+        return stringLength > 4 && stringLength <= 7
     }
 
     func textFieldDidChange(_ notification: Notification) {
