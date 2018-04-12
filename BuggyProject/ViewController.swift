@@ -24,7 +24,8 @@ class ViewController: UIViewController {
 
     // MARK: Actions
     @IBAction func bTap() {
-        searches.append((self.textField?.text)!)
+        guard let text = self.textField?.text, !text.isEmpty else { return }
+        searches.append(text)
         guard let request = imgurURLRequest() else { return }
         
         imageView?.setImageWith(request, placeholderImage: nil, success: { [weak self] (request, response, image) in self?.imageView?.image = image
@@ -38,7 +39,6 @@ class ViewController: UIViewController {
         let searchVC = SearchesViewController()
         searchVC.searches = searches
         present(searchVC, animated: true, completion: nil)
-        
     }
 
     // MARK: Helpers

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchesViewController: UIViewController, UITableViewDataSource {
+class SearchesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     static let cellIdentifier = "cellIdentifier"
     var searches : [String] = []
@@ -18,9 +18,10 @@ class SearchesViewController: UIViewController, UITableViewDataSource {
         super.viewDidLoad()
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: SearchesViewController.cellIdentifier)
         tableView.dataSource = self
-        tableView.reloadData()
+        tableView.delegate = self
+        
     }
-
+    
     // MARK: UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searches.count
