@@ -25,7 +25,7 @@ class ViewController: UIViewController {
 
     // MARK: Actions
     @IBAction func bTap() {
-        guard let search = textField?.text else {
+        guard let search = textField?.text, !search.isEmpty else {
             return
         }
         searches.append(search)
