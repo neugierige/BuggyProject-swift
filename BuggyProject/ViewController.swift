@@ -25,9 +25,10 @@ class ViewController: UIViewController {
 
     // MARK: Actions
     @IBAction func bTap() {
-        if let search = textField?.text {
-            searches.append(search)
+        guard let search = textField?.text else {
+            return
         }
+        searches.append(search)
         
         guard let request = imgurURLRequest() else { return }
         
